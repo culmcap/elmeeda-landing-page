@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Manrope:wght@600;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-navy: #0a1015;
+  --color-navy-dark: #060b0f;
+  --color-navy-light: #1a202c;
+  --color-orange: #ff8844;
+  --color-orange-light: #ffa366;
+  --color-orange-dark: #e67733;
+  --font-display: Manrope, Inter, system-ui, sans-serif;
+}
+
+@layer base {
+  * {
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+
+  body {
+    background-color: white;
+    color: #0a1015;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Tighter letter spacing for headlines - enterprise premium feel */
+  h1, h2, h3, .font-display {
+    letter-spacing: -0.02em;
+  }
+
+  /* Light section styles */
+  .section-light {
+    background-color: white;
+    color: #0a1015;
+  }
+
+  .section-light h1,
+  .section-light h2,
+  .section-light h3 {
+    color: #0a1015;
+  }
+
+  /* Dark section styles */
+  .section-dark {
+    background-color: var(--color-navy);
+    color: white;
+    background-image:
+      radial-gradient(circle at 20% 50%, rgba(255, 136, 68, 0.03) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.03) 0%, transparent 50%);
+  }
+
+  .section-dark h1,
+  .section-dark h2,
+  .section-dark h3 {
+    color: white;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
