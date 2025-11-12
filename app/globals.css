@@ -65,3 +65,93 @@
     text-wrap: balance;
   }
 }
+
+/* Animation for notification cards */
+@keyframes scaleUp {
+  0% {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-scaleUp {
+  animation: scaleUp 0.4s ease-out forwards;
+}
+
+/* Slide in from right animation for sequential notifications */
+@keyframes slideInRight {
+  0% {
+    transform: translateX(30px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-slideInRight {
+  animation: slideInRight 0.5s ease-out forwards;
+}
+
+/* Orbiting circles animation */
+@keyframes orbit {
+  0% {
+    transform: rotate(0deg) translateY(calc(var(--radius) * 1px)) rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg) translateY(calc(var(--radius) * 1px)) rotate(-360deg);
+  }
+}
+
+.animate-orbit {
+  animation: orbit calc(var(--duration) * 1s) linear infinite;
+}
+
+/* Container rotation animations for two-orbit system */
+@keyframes rotate-clockwise {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotate-counter-clockwise {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+
+.animate-orbit-slow {
+  animation: rotate-clockwise 25s linear infinite;
+}
+
+.animate-orbit-medium {
+  animation: rotate-counter-clockwise 28s linear infinite;
+}
+
+.animate-orbit-slower {
+  animation: rotate-clockwise 35s linear infinite;
+}
+
+/* Counter-rotation to keep logos upright */
+.animate-counter-rotate-slow {
+  animation: rotate-counter-clockwise 25s linear infinite;
+}
+
+.animate-counter-rotate-medium {
+  animation: rotate-clockwise 28s linear infinite;
+}
+
+.animate-counter-rotate-slower {
+  animation: rotate-counter-clockwise 35s linear infinite;
+}

@@ -9,41 +9,58 @@ export default function HowItWorks() {
   const steps = [
     {
       icon: AlertTriangle,
-      title: 'Check Engine Light Comes On',
-      description: 'Your truck throws a code at 2pm on I-40. Your driver pulls over and you get an alert from your ELD system.',
+      title: 'Check Engine Light',
+      description: 'Your truck throws a code. You get an alert from your ELD system.',
       label: '01',
+      color: '#FF8844',
     },
     {
       icon: Phone,
-      title: 'We Book the Repair in 2 Minutes',
-      description: "By 2:02pm, we've called 8 shops within 50 miles, found one with availability tomorrow at 8am for $850, and booked the appointment.",
+      title: 'We Book in 2 Minutes',
+      description: "We call shops nearby, compare prices, and book the best appointment.",
       label: '02',
+      color: '#4169E1',
     },
     {
       icon: FileCheck,
-      title: 'We Get Your Money Back',
-      description: "Repair gets done. Two weeks later, we've filed the warranty claim for the turbo actuator ($420) and the check is on its way.",
+      title: 'We Recover Warranty',
+      description: "After repair, we file warranty claims and get your money back.",
       label: '03',
+      color: '#10B981',
     },
   ];
 
   return (
-    <section id="how-it-works" className="py-32 bg-white border-b border-gray-200">
-      <div className="max-w-6xl mx-auto px-6 lg:px-8">
-        <motion.div {...fadeInUp} className="text-center mb-20">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-navy mb-6 leading-[1.1]">
-            Here's How It <span className="text-orange">Actually Works</span>
+    <section
+      id="how-it-works"
+      className="py-16 sm:py-24 md:py-32 relative overflow-hidden"
+      style={{
+        background: `
+          radial-gradient(ellipse 90% 70% at 50% 50%,
+            rgba(240, 249, 255, 0.8),
+            transparent 70%),
+          linear-gradient(180deg,
+            #FFFFFF 0%,
+            #F0F9FF 50%,
+            #FFFFFF 100%)
+        `
+      }}
+    >
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div {...fadeInUp} className="text-center mb-12 sm:mb-16 md:mb-20">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold text-navy mb-4 sm:mb-6 leading-[1.1]">
+            Here's How It <span className="text-[#4169E1]">Actually Works</span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            A real example from last Tuesday with one of our customers running 150 trucks in the Midwest.
+          <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed px-4">
+            A real example from one of our customers running 150 trucks in the Midwest.
           </p>
         </motion.div>
 
         <div className="relative">
           {/* Connection Line */}
-          <div className="hidden lg:block absolute top-24 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
+          <div className="hidden lg:block absolute top-24 left-[16.66%] right-[16.66%] h-px bg-gradient-to-r from-[#FF8844] via-[#4169E1] to-[#10B981] opacity-30" />
 
-          <div className="grid md:grid-cols-3 gap-8 relative">
+          <div className="grid md:grid-cols-3 gap-8 sm:gap-10 md:gap-8 relative">
             {steps.map((step, index) => (
               <motion.div
                 key={step.title}
@@ -54,17 +71,20 @@ export default function HowItWorks() {
                 className="relative flex flex-col items-center text-center"
               >
                 {/* Step Number Badge */}
-                <div className="text-orange/40 text-sm font-mono font-bold mb-4">
+                <div className="text-gray-400 text-xs sm:text-sm font-mono font-bold mb-3 sm:mb-4">
                   {step.label}
                 </div>
 
                 {/* Icon Circle */}
-                <div className="bg-gray-100 border border-gray-200 w-20 h-20 rounded-lg flex items-center justify-center mb-6 relative z-10">
-                  <step.icon className="w-9 h-9 text-orange" />
+                <div
+                  className="bg-white border-2 w-16 h-16 sm:w-20 sm:h-20 rounded-none flex items-center justify-center mb-4 sm:mb-6 relative z-10 shadow-lg"
+                  style={{ borderColor: step.color + '30' }}
+                >
+                  <step.icon className="w-7 h-7 sm:w-9 sm:h-9" style={{ color: step.color }} />
                 </div>
 
                 {/* Content */}
-                <h3 className="text-xl font-display font-bold text-navy mb-3">{step.title}</h3>
+                <h3 className="text-lg sm:text-xl font-display font-bold text-navy mb-2 sm:mb-3">{step.title}</h3>
                 <p className="text-gray-600 text-sm leading-relaxed">{step.description}</p>
               </motion.div>
             ))}
@@ -75,10 +95,10 @@ export default function HowItWorks() {
         <motion.div
           {...fadeInUp}
           transition={{ delay: 0.2 }}
-          className="mt-20 text-center"
+          className="mt-12 sm:mt-16 md:mt-20 text-center"
         >
-          <div className="inline-flex items-center gap-2 bg-gray-100 border border-gray-200 rounded-lg px-5 py-2.5 text-sm">
-            <span className="text-gray-600">Native integration with Samsara, Geotab, and Motive</span>
+          <div className="inline-flex items-center gap-2 bg-white border border-[#4169E1]/20 rounded-full px-4 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm shadow-md">
+            <span className="text-gray-700 font-medium">Native integration with Samsara, Geotab, and Motive</span>
           </div>
         </motion.div>
       </div>
