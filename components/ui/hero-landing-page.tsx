@@ -26,7 +26,7 @@ export function ElmeedaHero() {
   }, [mobileOpen])
 
   return (
-    <div className="min-h-screen text-white overflow-x-hidden relative">
+    <div className="min-h-screen text-white relative overflow-hidden">
       {/* Enhanced Blue Cloud Gradient Background */}
       <div
         className="absolute inset-0 z-0"
@@ -58,7 +58,7 @@ export function ElmeedaHero() {
       />
 
       {/* Animated Background Lines */}
-      <div className="absolute inset-0 z-[1] pointer-events-none">
+      <div className="absolute top-0 left-0 right-0 h-full z-[1] pointer-events-none overflow-hidden">
         <AnimatedLines />
       </div>
 
@@ -90,7 +90,7 @@ export function ElmeedaHero() {
         <div className="content-wrapper max-w-4xl mx-auto px-4 sm:px-6 md:px-12 text-center">
           {/* Tagline */}
           <div className="mb-4 sm:mb-6">
-            <span className="inline-block px-3 sm:px-4 py-1.5 sm:py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-[10px] sm:text-xs font-medium tracking-[0.12em] sm:tracking-[0.15em] uppercase">
+            <span className="inline-block px-3 sm:px-4 py-1.5 sm:py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-xs sm:text-sm font-medium tracking-[0.12em] sm:tracking-[0.15em] uppercase">
               Built for Fleet Operations
             </span>
           </div>
@@ -185,7 +185,10 @@ export function ElmeedaHero() {
               </div>
 
               {/* View All Maintenance Link */}
-              <button className="w-full flex items-center justify-between px-3 sm:px-4 py-2.5 sm:py-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors duration-200">
+              <button
+                className="w-full flex items-center justify-between px-3 sm:px-4 py-2.5 sm:py-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors duration-200"
+                aria-label="View all maintenance events"
+              >
                 <span className="text-gray-700 text-xs sm:text-sm font-medium">View all maintenance</span>
                 <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gray-500 flex-shrink-0" />
               </button>

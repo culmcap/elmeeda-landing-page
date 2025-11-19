@@ -99,6 +99,7 @@ export default function AIAgents() {
                 <a
                   href="#"
                   className="inline-flex items-center gap-2 text-[#4169E1] font-medium text-base group transition-all duration-200"
+                  aria-label={`Learn more about ${agent.title}`}
                 >
                   <span>Learn more</span>
                   <ArrowRight className="w-5 h-5 transition-transform duration-200 group-hover:translate-x-1" />

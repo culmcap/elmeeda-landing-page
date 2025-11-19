@@ -10,14 +10,16 @@ import Footer from '@/components/Footer';
 export default function Home() {
   return (
     <main className="min-h-screen bg-white">
-      <Navigation />
-      <Hero />
-      <CombinedFeaturedSection />
-      <AIAgents />
-      <Integrations />
-      <ROICalculator />
-      <FinalCTA />
-      <Footer />
+      <div className="max-w-[2000px] mx-auto">
+        <Navigation />
+        <Hero />
+        <CombinedFeaturedSection />
+        <AIAgents />
+        <Integrations />
+        <ROICalculator />
+        <FinalCTA />
+        <Footer />
+      </div>
     </main>
   );
 }

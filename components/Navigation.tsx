@@ -99,7 +99,7 @@ export default function Navigation() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={`md:hidden p-2 rounded-lg transition-colors ${
+              className={`md:hidden p-3 rounded-lg transition-colors ${
                 isScrolled ? 'text-navy hover:bg-gray-100' : 'text-white hover:bg-white/10'
               }`}
               aria-label="Toggle mobile menu"

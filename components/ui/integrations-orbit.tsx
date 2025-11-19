@@ -128,8 +128,8 @@ function IntegrationIcon({ logo, name, category, description }: { logo: string; 
       <div className="absolute left-1/2 -top-3 -translate-y-full -translate-x-1/2 hidden group-hover:block z-50 pointer-events-none">
         <div className="w-56 sm:w-64 rounded-none bg-white p-3 sm:p-4 shadow-2xl border border-gray-200">
           <div className="font-bold text-sm sm:text-base mb-1 text-gray-900">{name}</div>
-          <div className="text-[10px] sm:text-xs text-[#4169E1] mb-1.5 sm:mb-2 font-medium">{category}</div>
-          <div className="text-[10px] sm:text-xs text-gray-600 leading-relaxed">{description}</div>
+          <div className="text-xs sm:text-sm text-[#4169E1] mb-1.5 sm:mb-2 font-medium">{category}</div>
+          <div className="text-xs sm:text-sm text-gray-600 leading-relaxed">{description}</div>
 
           {/* Arrow */}
           <div className="absolute left-1/2 top-full -translate-x-1/2 -mt-1.5 w-3 h-3 rotate-45 bg-white border border-gray-200 border-t-0 border-l-0"></div>
@@ -140,9 +140,10 @@ function IntegrationIcon({ logo, name, category, description }: { logo: string; 
 }
 
 export default function IntegrationsOrbit() {
-  const INNER_RADIUS = 160;
-  const MIDDLE_RADIUS = 240;
-  const OUTER_RADIUS = 320;
+  // Responsive radii - smaller on mobile to prevent overflow
+  const INNER_RADIUS = typeof window !== 'undefined' && window.innerWidth < 640 ? 120 : 160;
+  const MIDDLE_RADIUS = typeof window !== 'undefined' && window.innerWidth < 640 ? 180 : 240;
+  const OUTER_RADIUS = typeof window !== 'undefined' && window.innerWidth < 640 ? 240 : 320;
 
   // Helper function to calculate position based on angle and radius
   const getPosition = (angle: number, radius: number) => {
@@ -154,7 +155,7 @@ export default function IntegrationsOrbit() {
   };
 
   return (
-    <div className="relative flex h-[500px] sm:h-[600px] md:h-[700px] lg:h-[800px] w-full items-center justify-center overflow-visible">
+    <div className="relative flex h-[500px] sm:h-[600px] md:h-[700px] lg:h-[800px] w-full items-center justify-center overflow-hidden">
       {/* Orbit path circles */}
       <svg
         xmlns="http://www.w3.org/2000/svg"

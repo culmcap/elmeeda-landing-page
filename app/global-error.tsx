@@ -11,7 +11,13 @@ export default function GlobalError({
 }) {
   useEffect(() => {
     // Log the error to an error reporting service
-    console.error('Global application error:', error);
+    if (process.env.NODE_ENV === 'development') {
+      console.error('Global application error:', error);
+    }
+
+    // TODO: Integrate production error tracking service
+    // Example: Sentry.captureException(error);
+    // Example: if (window.gtag) window.gtag('event', 'exception', { description: error.message, fatal: true });
   }, [error]);
 
   return (

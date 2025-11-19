@@ -6,6 +6,11 @@ import { Card } from '@/components/ui/card'
 import * as React from "react"
 import * as RechartsPrimitive from "recharts"
 import { cn } from "@/lib/utils"
+import { AnimatePresence, motion } from 'framer-motion'
+import { useReducedMotion } from '@/hooks/useReducedMotion'
+
+import { USMap } from '@/components/ui/us-map'
+import { WarrantyScanner } from '@/components/ui/warranty-scanner'
 
 export default function CombinedFeaturedSection() {
   const featuredCasestudy = {
@@ -16,7 +21,7 @@ export default function CombinedFeaturedSection() {
   }
 
   return (
-    <section className="pt-20 sm:pt-24 md:pt-32 pb-24 bg-white">
+    <section className="pt-20 sm:pt-24 md:pt-32 pb-24 relative z-10">
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 md:grid-rows-2 gap-0">
 
         {/* 1. LIVE FLEET MAP - Top Left */}
@@ -31,8 +36,10 @@ export default function CombinedFeaturedSection() {
           </h3>
 
           <div className="relative mt-6">
-            <div className="absolute top-16 left-1/2 -translate-x-1/2 z-10 px-3 py-1.5 bg-white border border-gray-200 text-gray-900 rounded-md text-xs font-medium shadow-lg flex items-center gap-2">
-              🚛 Active: 487 trucks on road
+            <div className="flex justify-center mb-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-gray-200 text-gray-900 rounded-md text-xs font-medium shadow-sm">
+                🚛 Active: 487 trucks on road
+              </div>
             </div>
             <USMap />
           </div>
@@ -41,9 +48,10 @@ export default function CombinedFeaturedSection() {
         {/* 2. REAL-TIME NOTIFICATIONS - Top Right */}
         <div className="flex flex-col justify-between gap-4 p-6 rounded-none border border-gray-200 bg-white">
           <div>
-            <span className="text-xs flex items-center gap-2 text-gray-600 mb-2">
-              <Activity className="w-4 h-4" /> Real-Time Coordination
-            </span>
+            <div className="flex items-center gap-2 text-sm text-gray-600 mb-4">
+              <Activity className="w-4 h-4" />
+              Real-Time Coordination
+            </div>
             <h3 className="text-xl font-normal text-gray-900">
               {featuredCasestudy.title}{" "}
               <span className="text-gray-600">{featuredCasestudy.subtitle}</span>
@@ -64,7 +72,7 @@ export default function CombinedFeaturedSection() {
             Most fleets miss 60-75% of warranty claims - that's $150K-$500K left unclaimed for 500-truck fleets.{" "}
             <span className="text-gray-600">We automatically scan repairs, identify warranty-eligible work, and file claims for you.</span>
           </h3>
-          <WarrantyRecoveryChart />
+          <WarrantyScanner />
         </div>
 
         {/* 4. FEATURE CARDS GRID - Bottom Right */}
@@ -108,9 +116,9 @@ function FeatureCard({ icon, title, subtitle, description }: {
 }) {
   return (
     <div className="flex flex-col gap-3 p-6 border border-gray-200 bg-white transition-colors hover:bg-blue-50/30">
-      <div className="flex items-center gap-2 text-blue-600 mb-1">
+      <div className="flex items-center gap-2 text-sm text-gray-600 mb-1">
         {icon}
-        <span className="text-sm font-semibold text-gray-900">{title}</span>
+        <span>{title}</span>
       </div>
       <p className="text-sm text-gray-700 leading-relaxed">
         {subtitle}
@@ -121,72 +129,6 @@ function FeatureCard({ icon, title, subtitle, description }: {
     </div>
   )
 }
-
-// ----------------- US Map with Animated Truck Routes -------------------
-// Realistic US truck routes across major interstates
-const truckRoutes = [
-  { path: 'M85,25 L75,27 L60,30 L40,32 L20,33', delay: 0, name: 'I-80 (NY to CA)' }, // East to West
-  { path: 'M90,55 L88,48 L86,40 L85,30 L84,20', delay: 1.5, name: 'I-95 (FL to ME)' }, // South to North
-  { path: 'M15,48 L30,46 L50,45 L70,47 L88,50', delay: 0.8, name: 'I-10 (CA to FL)' }, // West to East
-  { path: 'M55,55 L54,45 L53,35 L52,25 L51,15', delay: 2.2, name: 'I-35 (TX to MN)' }, // South to North
-  { path: 'M88,35 L72,33 L55,32 L38,30 L22,28', delay: 3, name: 'I-70 (MD to UT)' }, // East to West
-]
-
-const USMap = () => (
-  <div className="relative w-full h-auto">
-    <svg viewBox="0 0 100 65" className="w-full h-auto">
-      {/* Continental US Outline with State Borders */}
-      <g className="text-gray-200" fill="none" stroke="currentColor" strokeWidth="0.3">
-        {/* Simplified US outline */}
-        <path d="M 10,20 L 15,15 L 20,12 L 30,10 L 40,11 L 50,12 L 60,11 L 70,13 L 80,18 L 88,25 L 90,35 L 89,45 L 85,52 L 75,56 L 60,58 L 45,57 L 30,55 L 20,50 L 15,42 L 12,32 L 10,20 Z" fill="#F8FAFC" />
-
-        {/* State borders - simplified major states */}
-        <line x1="25" y1="15" x2="25" y2="50" opacity="0.3" /> {/* West coast states */}
-        <line x1="40" y1="12" x2="38" y2="55" opacity="0.3" /> {/* Mountain states */}
-        <line x1="55" y1="13" x2="53" y2="56" opacity="0.3" /> {/* Central states */}
-        <line x1="70" y1="15" x2="68" y2="54" opacity="0.3" /> {/* Midwest */}
-        <line x1="82" y1="20" x2="80" y2="52" opacity="0.3" /> {/* East coast */}
-
-        {/* Horizontal divisions */}
-        <line x1="15" y1="25" x2="88" y2="28" opacity="0.3" />
-        <line x1="18" y1="35" x2="87" y2="38" opacity="0.3" />
-        <line x1="20" y1="45" x2="85" y2="48" opacity="0.3" />
-      </g>
-
-      {/* Animated truck routes */}
-      {truckRoutes.map((route, i) => (
-        <g key={`route-${i}`}>
-          <path
-            d={route.path}
-            fill="none"
-            stroke="#4169E1"
-            strokeWidth="0.4"
-            strokeDasharray="1.5,1.5"
-            opacity="0.3"
-          />
-          {/* Moving truck */}
-          <circle r="1.2" fill="#4169E1" opacity="0.9">
-            <animateMotion
-              dur="12s"
-              repeatCount="indefinite"
-              begin={`${route.delay}s`}
-            >
-              <mpath href={`#route${i}`} />
-            </animateMotion>
-          </circle>
-          <path id={`route${i}`} d={route.path} fill="none" />
-        </g>
-      ))}
-
-      {/* Major city markers */}
-      <circle cx="84" cy="23" r="1.5" fill="#ef4444" opacity="0.7" /> {/* NYC */}
-      <circle cx="24" cy="32" r="1.5" fill="#ef4444" opacity="0.7" /> {/* LA */}
-      <circle cx="60" cy="28" r="1.5" fill="#ef4444" opacity="0.7" /> {/* Chicago */}
-      <circle cx="58" cy="48" r="1.5" fill="#ef4444" opacity="0.7" /> {/* Dallas */}
-      <circle cx="76" cy="42" r="1.5" fill="#ef4444" opacity="0.7" /> {/* Atlanta */}
-    </svg>
-  </div>
-)
 
 // ----------------- Warranty Recovery Chart -------------------
 const chartData = [
@@ -236,6 +178,7 @@ function WarrantyRecoveryChart() {
 
 // ----------------- Fleet Notification Cards -------------------
 interface FleetMessage {
+  id: number;
   truck: string
   time: string
   message: string
@@ -245,6 +188,7 @@ interface FleetMessage {
 
 const fleetMessages: FleetMessage[] = [
   {
+    id: 1,
     truck: "Truck #4091",
     time: "2m ago",
     message: "DPF derate detected → Calling 5 Indianapolis shops for emergency service",
@@ -252,6 +196,7 @@ const fleetMessages: FleetMessage[] = [
     color: "from-orange-400 to-red-500",
   },
   {
+    id: 2,
     truck: "Truck #2847",
     time: "8m ago",
     message: "Booked at Certified Peterbilt - ETA 45min, $1,850 quote approved",
@@ -259,6 +204,7 @@ const fleetMessages: FleetMessage[] = [
     color: "from-blue-400 to-indigo-500",
   },
   {
+    id: 3,
     truck: "Driver John M.",
     time: "12m ago",
     message: "Dispatched to Indianapolis dealer for brake pad replacement - Load transferred",
@@ -266,6 +212,7 @@ const fleetMessages: FleetMessage[] = [
     color: "from-purple-400 to-pink-500",
   },
   {
+    id: 4,
     truck: "Truck #5123",
     time: "18m ago",
     message: "Tire blowout I-80 Iowa → Mobile service en route, replacement truck dispatched",
@@ -273,6 +220,7 @@ const fleetMessages: FleetMessage[] = [
     color: "from-yellow-400 to-orange-500",
   },
   {
+    id: 5,
     truck: "Warranty Alert",
     time: "25m ago",
     message: "DEF pump replacement qualifies for $2,300 warranty recovery - Claim filed automatically",
@@ -280,56 +228,118 @@ const fleetMessages: FleetMessage[] = [
     color: "from-green-400 to-emerald-600",
   },
   {
+    id: 6,
     truck: "Truck #3394",
     time: "31m ago",
     message: "Cooling system repair complete - Back on road, $680 saved vs emergency shop pricing",
     status: "complete",
     color: "from-sky-400 to-blue-600",
   },
+  {
+    id: 7,
+    truck: "Truck #1102",
+    time: "35m ago",
+    message: "PM service scheduled - Maintenance booked at nearest terminal for next stop",
+    status: "booking",
+    color: "from-blue-400 to-cyan-500",
+  },
+  {
+    id: 8,
+    truck: "Trailer #9982",
+    time: "42m ago",
+    message: "ABS light alert - Mobile mechanic dispatched to rest area for inspection",
+    status: "dispatched",
+    color: "from-purple-400 to-indigo-500",
+  },
+  {
+    id: 9,
+    truck: "Truck #7721",
+    time: "55m ago",
+    message: "Injector replacement warranty approved by OEM - $3,200 credit issued",
+    status: "warranty",
+    color: "from-green-500 to-teal-600",
+  },
+  {
+    id: 10,
+    truck: "Driver Sarah L.",
+    time: "1h ago",
+    message: "Roadside assistance completed tire change - Unit back in service",
+    status: "complete",
+    color: "from-sky-500 to-blue-700",
+  },
 ]
 
 const ElmeedaFleetNotifications = () => {
-  // Show only first 5 notifications for better sequential effect
-  const visibleMessages = fleetMessages.slice(0, 5)
+  const prefersReducedMotion = useReducedMotion();
+  const [visibleMessages, setVisibleMessages] = React.useState(fleetMessages.slice(0, 4));
+  const [currentIndex, setCurrentIndex] = React.useState(4);
+
+  React.useEffect(() => {
+    // Disable auto-rotation if user prefers reduced motion
+    if (prefersReducedMotion) {
+      return;
+    }
+
+    const interval = setInterval(() => {
+      setVisibleMessages((current) => {
+        // Remove the first item (it's swiping away)
+        const remaining = current.slice(1);
+        
+        // Get next message index cyclically
+        const nextIndex = currentIndex % fleetMessages.length;
+        const nextMessage = fleetMessages[nextIndex];
+        
+        // Update index for next time (increment, wrap around)
+        setCurrentIndex((prev) => (prev + 1));
+
+        // Add new message at the end
+        return [...remaining, nextMessage];
+      });
+    }, 3500); // Change card every 3.5 seconds
+
+    return () => clearInterval(interval);
+  }, [currentIndex, prefersReducedMotion]);
 
   return (
-    <div className="w-full max-w-sm h-[280px] bg-white p-2 overflow-hidden font-sans relative rounded-lg border border-gray-200">
-      {/* Fade overlay */}
-      <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white via-white/80 to-transparent z-10 pointer-events-none"></div>
+    <div className="w-full max-w-md h-[360px] bg-white p-2 overflow-hidden font-sans relative rounded-lg border border-gray-200">
+      {/* Fade overlay at bottom */}
+      <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-white via-white/60 to-transparent z-20 pointer-events-none"></div>
 
-      <div className="space-y-2 relative z-0">
-        {visibleMessages.map((msg, i) => (
-          <div
-            key={i}
-            className={`flex gap-3 items-start p-3 border border-gray-200 rounded-lg transform transition duration-300 ease-in-out cursor-pointer animate-slideInRight hover:border-blue-300 hover:bg-blue-50/30`}
-            style={{
-              animationDelay: `${i * 800}ms`,
-              animationFillMode: "forwards",
-              opacity: 0,
-            }}
-          >
-            <div
-              className={`w-10 h-10 min-w-[2.5rem] min-h-[2.5rem] rounded-lg bg-gradient-to-br ${msg.color} flex items-center justify-center text-white font-bold text-xs shadow-sm`}
+      <div className="relative z-10 h-full w-full p-2 flex flex-col gap-3">
+        <AnimatePresence initial={false} mode="popLayout">
+          {visibleMessages.map((msg) => (
+            <motion.div
+              key={msg.id}
+              layout
+              initial={{ opacity: 0, y: 50, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, x: 100, transition: { duration: 0.4 } }}
+              transition={{ type: "spring", stiffness: 350, damping: 25 }}
+              className={`w-full flex gap-3 items-start p-3 border border-gray-200 rounded-lg bg-white shadow-sm hover:border-blue-300 hover:bg-blue-50/30 transition-colors`}
             >
-              {msg.status === 'calling' && '📞'}
-              {msg.status === 'booking' && '🔧'}
-              {msg.status === 'dispatched' && '🚛'}
-              {msg.status === 'complete' && '✅'}
-              {msg.status === 'warranty' && '💰'}
-            </div>
-            <div className="flex flex-col flex-1 min-w-0">
-              <div className="flex items-center gap-2 text-xs font-semibold text-gray-900">
-                {msg.truck}
-                <span className="text-xs text-gray-600 before:content-['•'] before:mr-1">
-                  {msg.time}
-                </span>
+              <div
+                className={`w-10 h-10 min-w-[2.5rem] min-h-[2.5rem] rounded-lg bg-gradient-to-br ${msg.color} flex items-center justify-center text-white font-bold text-xs shadow-sm`}
+              >
+                {msg.status === 'calling' && '📞'}
+                {msg.status === 'booking' && '🔧'}
+                {msg.status === 'dispatched' && '🚛'}
+                {msg.status === 'complete' && '✅'}
+                {msg.status === 'warranty' && '💰'}
               </div>
-              <p className="text-xs text-gray-600 mt-1 line-clamp-2 leading-relaxed">
-                {msg.message}
-              </p>
-            </div>
-          </div>
-        ))}
+              <div className="flex flex-col flex-1 min-w-0">
+                <div className="flex items-center gap-2 text-xs font-semibold text-gray-900">
+                  {msg.truck}
+                  <span className="text-xs text-gray-600 before:content-['•'] before:mr-1">
+                    {msg.time}
+                  </span>
+                </div>
+                <p className="text-xs text-gray-600 mt-1 line-clamp-2 leading-relaxed">
+                  {msg.message}
+                </p>
+              </div>
+            </motion.div>
+          ))}
+        </AnimatePresence>
       </div>
     </div>
   )
@@ -552,6 +562,7 @@ const ChartTooltipContent = React.forwardRef<
                           style={
                             {
                               "--color-bg": indicatorColor,
+                              "--color-border": indicatorColor,
                               "--color-border": indicatorColor,
                             } as React.CSSProperties
                           }
